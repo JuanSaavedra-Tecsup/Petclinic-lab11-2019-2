@@ -11,10 +11,15 @@ import org.springframework.stereotype.Service;
 import com.tecsup.petclinic.domain.Owner;
 import com.tecsup.petclinic.domain.OwnerRepository;
 import com.tecsup.petclinic.exception.OwnerNotFoundException;
-
+  
+/**
+ * 
+ * @author jgomezm
+ *
+ */
 @Service
-public class OwnerServiceImpl {
-	
+public class OwnerServiceImpl implements OwnerService {
+
 	private static final Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
 
 	@Autowired
@@ -22,10 +27,44 @@ public class OwnerServiceImpl {
 
 	/**
 	 * 
-	 * @param owner
+	 * @param pet
 	 * @return
 	 */
-	
+	@Override
+	public Owner create(Owner owner) {
+		return ownerRepository.save(owner);
+		               
+	}
+
+	/**
+	 * 
+	 * @param pet
+	 * @return
+	 */
+	@Override
+	public Owner update(Owner owner) {
+		return ownerRepository.save(owner);
+	}
+
+
+	/**
+	 * 
+	 * @param id
+	 * @throws OwnerNotFoundException
+	 */
+	@Override
+	public void delete(Long id) throws OwnerNotFoundException{
+
+		Owner owner = findById(id);
+		ownerRepository.delete(owner);
+
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@Override
 	public Owner findById(long id) throws OwnerNotFoundException {
 
@@ -39,48 +78,19 @@ public class OwnerServiceImpl {
 
 	/**
 	 * 
-	 * @param name
-	 * @return
-	 */
-	@Override
-	public List<Owner> findByName(String name) {
-
-		List<Owner> owners = ownersRepository.findByName(name);
-
-		owners.stream().forEach(owner -> logger.info("" + owner));
-
-		return owners;
-	}
-
-	/**
-	 * 
 	 * @param typeId
 	 * @return
 	 */
 	@Override
-	public List<Owner> findByTypeId(int typeId) {
+	public List<Owner> findByTypeId(int id) {
 
-		List<Owner> owners = ownerRepository.findByTypeId(typeId);
-
-		owners.stream().forEach(owner -> logger.info("" + owner));
-
-		return owners;
-	}
-
-	/**
-	 * 
-	 * @param ownerId
-	 * @return
-	 */
-	@Override
-	public List<Owner> findByOwnerId(int ownerId) {
-
-		List<Owner> owners = ownerRepository.findByOwnerId(ownerId);
+		List<Owner> owners = ownerRepository.findById(id);
 
 		owners.stream().forEach(owner -> logger.info("" + owner));
 
 		return owners;
 	}
+
 
 	/**
 	 * 
@@ -94,6 +104,10 @@ public class OwnerServiceImpl {
 	
 	}
 
-	
+	@Override
+	public List<Owner> findByName(String first_name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

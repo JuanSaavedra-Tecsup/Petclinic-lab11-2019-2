@@ -24,7 +24,7 @@ import com.tecsup.petclinic.exception.OwnerNotFoundException;
 @RunWith(SpringRunner.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class OwnerServiceTest {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(OwnerServiceTest.class);
 
 	@Autowired
@@ -33,11 +33,11 @@ public class OwnerServiceTest {
 	/**
 	 * 
 	 */
-	//@Test
-	public void testFindById() {
+	@Test
+	public void testFindOwnerById() {
 
-		String NAME = "George";
 		long ID = 1;
+		String FIRST_NAME = "George";
 		Owner owner = null;
 		
 		try {
@@ -47,92 +47,10 @@ public class OwnerServiceTest {
 		}
 		logger.info("" + owner);
 
-		assertEquals(NAME, owner.getFirstname());
+		assertEquals(FIRST_NAME, owner.getFirst_name());
 
 	}
 
-	/**
-	 * 
-	 */
-	//@Test
-	public void testFindByFirstname() {
 
-		String FIND_NAME = "Betty";
-		int SIZE_EXPECTED = 2;
-
-		List<Owner> owners = ownerService.findByFirstname(FIND_NAME);
-
-		assertEquals(SIZE_EXPECTED, owners.size());
-	}
-
-
-	/**
-	 * 
-	 */
-	//@Test
-	public void testFindByLastname() {
-
-		String LAST_NAME = "Escobito";
-		int SIZE_EXPECTED = 8;
-
-		List<Owner> owners = ownerService.findByLastname(LAST_NAME);
-
-		assertEquals(SIZE_EXPECTED, owners.size());
-	}
-	
-	
-	/**
-	 * 
-	 */
-	//@Test
-	public void testFindByCity() {
-
-		String CITY = "Madison";
-		int SIZE_EXPECTED = 9;
-
-		List<Owner> owners = ownerService.findByCity(CITY);
-
-		assertEquals(SIZE_EXPECTED, owners.size());
-	}
-
-	/**
-	 * 
-	 */
-	@Test
-	public void testCreateOwnerandFound() {
-
-		String OWNER_FIRSTNAME = "Maria";
-		String OWNER_LASTNAME = "Poma";
-		String OWNER_ADDRESS = "";
-		String OWNER_CITY = "La molina";
-		String OWNER_TELEPHONE = "";		
-
-		Owner owner = new Owner(OWNER_FIRSTNAME, OWNER_LASTNAME,
-				OWNER_ADDRESS, OWNER_CITY, OWNER_TELEPHONE);
-		
-		owner = ownerService.create(owner);
-		
-		try {
-			Owner ownerCreatedFound = ownerService.findById(owner.getId());
-			logger.info("Owner id: "+ ownerCreatedFound.getId() + " owner created.");
-		}catch (OwnerNotFoundException e) {
-			logger.info("Owner no creado");
-		}
-		
-		//Iterable un metodo que busca lo repetido.
-		Iterable<Owner> ownersFound = ownerService.findAll();
-		
-		
-		while(ownersFound.iterator().hasNext()) {
-			try {
-				Owner ownerInListFound = ownerService.findById(owner.getId());
-				logger.info("Owner: "+ ownerInListFound.getId() + " existe.");
-				break;
-			}catch (OwnerNotFoundException e) {
-				logger.info("Owner no existe");
-			}
-		}
-				
-	}
 	
 }
